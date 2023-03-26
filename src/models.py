@@ -20,8 +20,30 @@ class User(Base):
 class Followers(Base):
     __tablename__ = 'seguidores'
     id = Column(Integer, primary_key=True)  
-    id_user = Column(Integer, ForeignKey('usuarios.id'))
-    id_follow = Column(Integer, ForeignKey('usuarios.id'))
+    id_usuario = Column(Integer, ForeignKey('usuarios.id'))
+    id_seguidor = Column(Integer, ForeignKey('usuarios.id'))
+
+class Post(Base):
+    __tablename__ = 'post'
+    id = Column(Integer, primary_key=True)
+    id_usuario = Column(Integer, ForeignKey('usuarios.id'))
+
+class Media(Base):
+    __tablename__ = 'media'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    url = Column(String(500), nullable=False)
+    id_post = Column(Integer, ForeignKey('post.id'))
+
+class Comment(Base):
+    __tablename__ = 'comentarios'
+    id = Column(Integer, primary_key=True)
+    comentario = Column(String(300))
+    id_user = Column(Integer, ForeignKey('usuario.id'))
+    id_post = Column(Integer, ForeignKey('post.id')) 
+
+    def to_dict(self):
+        return {}
 
 ## Draw from SQLAlchemy base
 try:
